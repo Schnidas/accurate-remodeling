@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   ACCURATE REMODELING + DESIGN — "The Measure"
+   A drafting-room design system. Warm modern-rustic photography
+   structured by architectural dimension lines. Design + Build,
+   expressed in the type itself: Fraunces (craft) / Hanken (read)
+   / IBM Plex Mono (the accurate, technical voice).
+   ============================================================ */
+
+@theme {
+  /* Color */
+  --color-paper: #efe9de; /* warm bone — the page */
+  --color-paper-2: #e7dece; /* deeper bone — alternating bands */
+  --color-ink: #1c1a17; /* warm near-black — primary text */
+  --color-ink-soft: #46403a; /* softened ink — body copy */
+  --color-stone: #7c7264; /* warm grey — dimension lines, captions */
+  --color-stone-light: #b3a895; /* faint rules on paper */
+  --color-brick: #9e3328; /* the logo red — the one bold accent */
+  --color-brick-deep: #842519; /* pressed/hover state */
+  --color-walnut: #241d18; /* dark wood — inverted sections */
+  --color-walnut-soft: #322820;
+  --color-blueprint: #14304a; /* contained risk — the design room */
+  --color-blueprint-line: #7db0cd; /* drafting cyan */
+
+  /* Type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* Motion */
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@layer base {
+  html {
+    /* offset anchor targets for the fixed header */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    font-optical-sizing: auto;
+    color: var(--color-ink);
+  }
+
+  ::selection {
+    background-color: var(--color-brick);
+    color: var(--color-paper);
+  }
+
+  /* Fraunces fine-tuning: a touch of softness + old-style figures for craft */
+  .font-display {
+    font-variation-settings: 'SOFT' 0, 'WONK' 0;
+    font-optical-sizing: auto;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brick);
+    outline-offset: 3px;
+  }
+}
+
+@layer utilities {
+  /* The technical voice — mono eyebrows, spec labels, dimensions */
+  .spec {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.7rem;
+  }
+
+  /* Paper grain / drafting tint helpers */
+  .bg-grain {
+    background-image:
+      radial-gradient(rgba(28, 26, 23, 0.022) 1px, transparent 1px);
+    background-size: 4px 4px;
+  }
+
+  .edge-rule {
+    border-color: color-mix(in srgb, var(--color-stone) 28%, transparent);
+  }
+}
+
+/* Marquee for the spec strip */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 38s linear infinite;
+}
+
+/* Dimension line draw-in (used when motion is reduced as a CSS fallback too) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-marquee {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
